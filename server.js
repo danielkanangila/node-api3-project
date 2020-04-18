@@ -1,13 +1,9 @@
-const express = require('express');
+const http = require("http");
+const app = require("./index");
+const env = process.env;
 
-const server = express();
+const server = http.createServer(app);
 
-server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`);
+server.listen(env.PORT, () => {
+  console.log(`Application listen on ${env.HOST}:${env.PORT}`);
 });
-
-//custom middleware
-
-function logger(req, res, next) {}
-
-module.exports = server;
