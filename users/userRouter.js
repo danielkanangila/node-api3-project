@@ -83,8 +83,21 @@ router.delete('/:id', validateUser, async (req, res) => {
   }
 });
 
-router.put('/:id', validateUserId, (req, res) => {
-  // do your magic!
+router.put('/:id', validateUserId, validateUser, async (req, res) => {
+  // Update user info
+  try {
+    const result = await User.update(req.user.id, req.body);
+    if (!result) {
+      res.status(400).json({message: "Can't update user information"});
+      return false;
+    }
+    const user = await User.getById(req.user.id);
+    res.status(201).json(user);
+  } catch(err) {
+    console.error(err);
+    res.status(500).json({message: "An error occurred while trying to update user information."});
+  }
+
 });
 
 //custom middleware
