@@ -71,7 +71,7 @@ router.get('/:id/posts', validateUserId, async (req, res) => {
 router.delete('/:id', validateUser, async (req, res) => {
   // delete user by ID
   try {
-    const user = await User.remove(req.params.body);
+    const user = await User.remove(req.params.id);
     if (!user) {
       res.send(400).json({message: "Can't delete user wth the specified ID"});
       return false
